@@ -23,9 +23,12 @@ public class HeapSort {
 
     public void sort() {
         System.out.println("sort before:\n" + this);
+        // 初始化建堆的时间复杂度为 O(n)
         heapify();
         System.out.println("heapify:\n" + this);
         // O(nlogn)
+        // 建完堆以后需要进行 n−1 次调整，一次调整（即 maxHeapify） 的时间复杂度为 O(logn)，
+        // 那么 n−1 次调整即需要 O(nlogn) 的时间复杂度。因此，总时间复杂度为 O(n+nlogn)=O(nlogn)。
         for (int i = size - 1; i > 0; --i) {
             int tmp = nums[i];
             nums[i] = nums[0];

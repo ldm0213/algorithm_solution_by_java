@@ -1,7 +1,11 @@
 package com.leetcode.editor.cn;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 
 /**
  * @author  lidongmeng
@@ -55,7 +59,25 @@ class Node {
 
 class Solution {
     public Node cloneGraph(Node node) {
-        
+        if (node == null) return null;
+        Queue<Node> q = new ArrayDeque<>();
+        Map<Node, Node> mmap = new HashMap<>();
+        q.offer(node);
+        while (!q.isEmpty()) {
+            Node t = q.poll();
+            if (!mmap.containsKey(t)) {
+                mmap.put(t, new Node(t.val));
+            }
+            for (int i = 0; i < t.neighbors.size(); ++i) {
+                Node tmp = t.neighbors.get(i);
+                if (!mmap.containsKey(tmp)) {
+                    mmap.put(tmp, new Node(tmp.val));
+                    q.offer(tmp);
+                }
+                mmap.get(t).neighbors.add(mmap.get(tmp));
+            }
+        }
+        return mmap.get(node);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
